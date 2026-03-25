@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gate Live · Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══ THEME TOKENS ═════════════════════════════ */
+:root {
+  --blue:#4da6ff;--green:#28d47e;--amber:#f5c030;--red:#ff5f5f;
+  --r:22px;--r-sm:13px;
+  --trans:all 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+  --bg-page:#06080f;--bg-frame:#0c0e1a;
+  --bg-screen:linear-gradient(175deg,#0d1122 0%,#080a14 100%);
+  --orb1:rgba(50,80,255,0.22);--orb2:rgba(120,40,255,0.16);--orb3:rgba(18,155,125,0.10);
+  --ph-border:rgba(255,255,255,0.10);--ph-shadow:rgba(0,0,0,0.78);
+  --sc-b:rgba(55,85,255,0.16);--sc-a:rgba(120,40,255,0.09);
+  --t1:rgba(255,255,255,0.97);--t2:rgba(255,255,255,0.52);--t3:rgba(255,255,255,0.27);
+  --cd-bg:linear-gradient(148deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.042) 55%,rgba(255,255,255,0.07) 100%);
+  --cd-br:rgba(255,255,255,0.13);--cd-top:rgba(255,255,255,0.28);--cd-left:rgba(255,255,255,0.19);
+  --cd-sh:0 8px 30px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.18);
+  --cd-shine:rgba(255,255,255,0.38);
+  --cb-bg:linear-gradient(148deg,rgba(94,174,255,0.13) 0%,rgba(255,255,255,0.04) 55%,rgba(120,80,255,0.08) 100%);
+  --cb-br:rgba(94,174,255,0.22);
+  --cg-bg:linear-gradient(148deg,rgba(48,217,136,0.11) 0%,rgba(255,255,255,0.04) 60%,rgba(30,180,120,0.06) 100%);
+  --cg-br:rgba(48,217,136,0.22);
+  --ca-bg:linear-gradient(148deg,rgba(255,200,68,0.11) 0%,rgba(255,255,255,0.04) 60%);
+  --ca-br:rgba(255,200,68,0.25);--ca-top:rgba(255,200,68,0.40);
+  --nav-bg:linear-gradient(to top,rgba(6,8,15,0.97) 0%,rgba(6,8,15,0.70) 100%);
+  --ni:rgba(255,255,255,0.32);--nl:rgba(255,255,255,0.32);--non:rgba(255,255,255,0.07);
+  --pb:rgba(255,255,255,0.09);--dv:rgba(255,255,255,0.06);--sec:rgba(255,255,255,0.28);
+  --gd-bg:rgba(40,212,126,0.10);--gd-br:rgba(40,212,126,0.22);--gd-t:var(--green);
+  --gn-bg:rgba(77,166,255,0.16);--gn-br:rgba(77,166,255,0.38);--gn-t:var(--blue);
+  --gw-bg:rgba(255,255,255,0.04);--gw-br:rgba(255,255,255,0.09);--gw-t:rgba(255,255,255,0.27);
+  --bb-bg:rgba(77,166,255,0.18);--bb-br:rgba(77,166,255,0.32);--bb-t:var(--blue);
+  --si:rgba(255,255,255,0.88);--sd:rgba(255,255,255,0.28);
+  --hb:rgba(255,255,255,0.22);--hint:rgba(255,255,255,0.16);
+  --tk-tr:rgba(255,255,255,0.12);--tk-kn:#ffffff;
+  --atm:rgba(255,255,255,0.90);--atl:rgba(255,255,255,0.40);
+}
+[data-theme="light"] {
+  --bg-page:#e4e8f4;--bg-frame:#d8dcea;
+  --bg-screen:linear-gradient(175deg,#edf1fb 0%,#e2e6f5 100%);
+  --orb1:rgba(100,140,255,0.18);--orb2:rgba(150,80,255,0.10);--orb3:rgba(30,180,150,0.08);
+  --ph-border:rgba(255,255,255,0.68);--ph-shadow:rgba(140,155,200,0.32);
+  --sc-b:rgba(100,140,255,0.10);--sc-a:rgba(150,80,255,0.06);
+  --t1:rgba(12,16,38,0.96);--t2:rgba(12,16,38,0.50);--t3:rgba(12,16,38,0.30);
+  --cd-bg:linear-gradient(148deg,rgba(255,255,255,0.80) 0%,rgba(255,255,255,0.55) 55%,rgba(255,255,255,0.70) 100%);
+  --cd-br:rgba(255,255,255,0.72);--cd-top:rgba(255,255,255,0.94);--cd-left:rgba(255,255,255,0.84);
+  --cd-sh:0 8px 30px rgba(100,120,180,0.10),inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03);
+  --cd-shine:rgba(255,255,255,0.92);
+  --cb-bg:linear-gradient(148deg,rgba(77,166,255,0.12) 0%,rgba(255,255,255,0.54) 55%,rgba(120,80,255,0.07) 100%);
+  --cb-br:rgba(77,166,255,0.28);
+  --cg-bg:linear-gradient(148deg,rgba(40,212,126,0.10) 0%,rgba(255,255,255,0.54) 60%,rgba(30,180,120,0.05) 100%);
+  --cg-br:rgba(40,212,126,0.28);
+  --ca-bg:linear-gradient(148deg,rgba(245,192,48,0.12) 0%,rgba(255,255,255,0.56) 60%);
+  --ca-br:rgba(245,192,48,0.30);--ca-top:rgba(245,192,48,0.52);
+  --nav-bg:linear-gradient(to top,rgba(228,232,244,0.97) 0%,rgba(228,232,244,0.75) 100%);
+  --ni:rgba(12,16,38,0.32);--nl:rgba(12,16,38,0.32);--non:rgba(12,16,38,0.06);
+  --pb:rgba(12,16,38,0.09);--dv:rgba(12,16,38,0.07);--sec:rgba(12,16,38,0.32);
+  --gd-bg:rgba(40,212,126,0.12);--gd-br:rgba(40,212,126,0.28);--gd-t:#1a9a5e;
+  --gn-bg:rgba(77,166,255,0.14);--gn-br:rgba(77,166,255,0.35);--gn-t:#2070cc;
+  --gw-bg:rgba(12,16,38,0.05);--gw-br:rgba(12,16,38,0.10);--gw-t:rgba(12,16,38,0.30);
+  --bb-bg:rgba(77,166,255,0.13);--bb-br:rgba(77,166,255,0.28);--bb-t:#2070cc;
+  --si:rgba(12,16,38,0.78);--sd:rgba(12,16,38,0.26);
+  --hb:rgba(12,16,38,0.22);--hint:rgba(12,16,38,0.18);
+  --tk-tr:rgba(12,16,38,0.10);--tk-kn:#ffffff;
+  --atm:rgba(12,16,38,0.42);--atl:rgba(12,16,38,0.90);
+}
+
+/* ══ RESET ════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-page);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;-webkit-font-smoothing:antialiased;transition:background .4s;}
+
+/* ── Orbs ── */
+.orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(90px);z-index:0;transition:background .4s;}
+.orb-1{width:620px;height:620px;top:-170px;right:-170px;background:radial-gradient(circle,var(--orb1) 0%,transparent 68%);}
+.orb-2{width:520px;height:520px;bottom:-130px;left:-130px;background:radial-gradient(circle,var(--orb2) 0%,transparent 68%);}
+.orb-3{width:290px;height:290px;top:45%;left:38%;background:radial-gradient(circle,var(--orb3) 0%,transparent 68%);}
+
+/* ── Theme toggle ── */
+.tgl{position:fixed;top:24px;right:24px;z-index:100;display:flex;align-items:center;gap:9px;background:var(--cd-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--cd-br);border-top-color:var(--cd-top);box-shadow:0 4px 22px rgba(0,0,0,0.16);border-radius:40px;padding:8px 14px 8px 10px;cursor:pointer;transition:var(--trans);user-select:none;}
+.tgl:hover{transform:scale(1.03);}
+.tgl-lbl{font-size:12px;font-weight:600;color:var(--t2);letter-spacing:.2px;transition:color .35s;}
+.tgl-trk{width:38px;height:22px;border-radius:11px;background:var(--tk-tr);position:relative;transition:background .35s;border:1px solid var(--cd-br);flex-shrink:0;}
+[data-theme="light"] .tgl-trk{background:var(--blue);}
+.tgl-knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--tk-kn);box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+[data-theme="light"] .tgl-knob{transform:translateX(16px);}
+.ico-moon,.ico-sun{transition:opacity .3s;flex-shrink:0;}
+.ico-sun{opacity:0;position:absolute;left:10px;}
+[data-theme="light"] .ico-sun{opacity:1;}
+[data-theme="light"] .ico-moon{opacity:0;}
+
+/* ── Phone ── */
+.phone{position:relative;z-index:10;width:390px;height:844px;border-radius:52px;background:var(--bg-frame);border:1px solid var(--ph-border);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 50px 100px var(--ph-shadow),inset 0 1px 0 rgba(255,255,255,.12);overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;transition:background .4s,border-color .4s,box-shadow .4s;}
+.island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:122px;height:36px;background:#000;border-radius:20px;z-index:200;display:flex;align-items:center;justify-content:center;}
+.island-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.08);}
+
+/* ── Status bar ── */
+.sbar{display:flex;align-items:center;justify-content:space-between;padding:15px 30px 0;height:54px;font-size:15px;font-weight:600;color:var(--t1);letter-spacing:-.2px;flex-shrink:0;transition:color .35s;}
+.sbar-r{display:flex;align-items:center;gap:5px;}
+.si{fill:var(--si);transition:fill .35s;}
+.sd{fill:var(--sd);transition:fill .35s;}
+.ss{stroke:var(--si);transition:stroke .35s;}
+.ssd{stroke:var(--sd);transition:stroke .35s;}
+
+/* ── Screen ── */
+.screen{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative;background:var(--bg-screen);transition:background .4s;}
+.screen::before{content:'';position:absolute;top:0;right:0;width:280px;height:280px;background:radial-gradient(circle,var(--sc-b) 0%,transparent 70%);pointer-events:none;z-index:0;transition:background .4s;}
+.screen::after{content:'';position:absolute;bottom:80px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--sc-a) 0%,transparent 70%);pointer-events:none;z-index:0;transition:background .4s;}
+
+/* ── Panes ── */
+.pane{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 18px 96px;position:relative;z-index:1;scrollbar-width:none;}
+.pane::-webkit-scrollbar{display:none;}
+.pane.show{display:block;}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.pane.show>*{animation:up .28s ease both;}
+.pane.show>*:nth-child(1){animation-delay:.00s}
+.pane.show>*:nth-child(2){animation-delay:.04s}
+.pane.show>*:nth-child(3){animation-delay:.08s}
+.pane.show>*:nth-child(4){animation-delay:.12s}
+.pane.show>*:nth-child(5){animation-delay:.15s}
+.pane.show>*:nth-child(6){animation-delay:.18s}
+.pane.show>*:nth-child(7){animation-delay:.21s}
+.pane.show>*:nth-child(8){animation-delay:.23s}
+.pane.show>*:nth-child(9){animation-delay:.25s}
+.pane.show>*:nth-child(10){animation-delay:.27s}
+
+/* ── Cards ── */
+.card{background:var(--cd-bg);backdrop-filter:blur(32px) saturate(170%);-webkit-backdrop-filter:blur(32px) saturate(170%);border-radius:var(--r);border:1px solid var(--cd-br);border-top-color:var(--cd-top);border-left-color:var(--cd-left);box-shadow:var(--cd-sh);padding:17px 18px;margin-bottom:10px;position:relative;overflow:hidden;transition:var(--trans);}
+.card::after{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--cd-shine),transparent);}
+.card-blue{background:var(--cb-bg);border-color:var(--cb-br);border-top-color:var(--cd-top);}
+.card-green{background:var(--cg-bg);border-color:var(--cg-br);border-top-color:var(--cd-top);}
+.card-amber{background:var(--ca-bg);border-color:var(--ca-br);border-top-color:var(--ca-top);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.grid2 .card{margin-bottom:0;}
+
+/* ── Type ── */
+.t1{color:var(--t1);transition:color .35s;}
+.t2{color:var(--t2);transition:color .35s;}
+.t3{color:var(--t3);transition:color .35s;}
+.ptitle{font-size:27px;font-weight:700;letter-spacing:-.9px;color:var(--t1);margin-bottom:16px;padding-top:2px;transition:color .35s;}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.7px;margin:6px 0 9px;transition:color .35s;}
+.tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px;transition:color .35s;}
+.tv{font-size:24px;font-weight:700;letter-spacing:-.6px;color:var(--t1);line-height:1.1;transition:color .35s;}
+.ts{font-size:11px;color:var(--t2);margin-top:3px;transition:color .35s;}
+
+/* ── Header ── */
+.header{display:flex;align-items:center;justify-content:space-between;padding:4px 0 10px;}
+.logo{font-size:21px;font-weight:700;letter-spacing:-.7px;color:var(--t1);transition:color .35s;}
+.logo em{font-style:normal;color:var(--blue);}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:600;letter-spacing:.15px;}
+.badge-on{background:var(--bb-bg);border:1px solid var(--bb-br);color:var(--bb-t);transition:var(--trans);}
+.pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pd 2s ease-in-out infinite;}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+
+/* ── Hero ── */
+.hero{background:var(--cb-bg);border-color:var(--cb-br);border-top-color:var(--cd-top);box-shadow:var(--cd-sh);padding:22px 20px;margin-bottom:10px;}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+.hero-pill{padding:8px 12px;border-radius:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);min-width:92px;}
+[data-theme="light"] .hero-pill{background:rgba(12,16,38,0.04);border-color:rgba(12,16,38,0.08);}
+.hero-k{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px;transition:color .35s;}
+.hero-v{font-size:18px;font-weight:700;letter-spacing:-.5px;color:var(--t1);line-height:1.1;transition:color .35s;}
+.route{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.iata{font-size:33px;font-weight:700;letter-spacing:-1.2px;line-height:1;color:var(--t1);transition:color .35s;}
+.cname{font-size:10.5px;color:var(--t2);margin-top:3px;letter-spacing:.3px;transition:color .35s;}
+.rmid{flex:1;display:flex;align-items:center;padding:0 14px;}
+.rl{flex:1;height:1px;}
+.rl-l{background:linear-gradient(90deg,rgba(128,128,180,.2),var(--blue));}
+.rl-r{background:linear-gradient(90deg,var(--blue),rgba(128,128,180,.2));}
+.pdot{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue);flex-shrink:0;}
+.cdlbl{font-size:10.5px;color:var(--t2);letter-spacing:1.1px;text-transform:uppercase;text-align:center;margin-bottom:8px;transition:color .35s;}
+.cdown{display:flex;justify-content:center;align-items:baseline;gap:2px;}
+.cu{text-align:center;}
+.cn{font-size:50px;font-weight:700;letter-spacing:-3.5px;line-height:1;font-family:'DM Mono',monospace;color:var(--t1);transition:color .35s;}
+.csub{font-size:9.5px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-top:4px;transition:color .35s;}
+.csep{font-size:34px;font-weight:300;color:var(--t3);line-height:1;margin:0 3px 14px;transition:color .35s;}
+
+/* ── Alert ── */
+.alert-strip{display:flex;gap:10px;align-items:flex-start;padding:11px 15px;border-radius:var(--r-sm);margin-bottom:10px;}
+.amsg{font-size:12.5px;font-weight:500;line-height:1.4;color:var(--amber);}
+.atime{font-size:10.5px;color:rgba(200,160,30,.6);margin-top:2px;}
+[data-theme="light"] .atime{color:rgba(160,120,10,.55);}
+
+/* ── Progress ── */
+.pb-wrap{height:5px;border-radius:3px;background:var(--pb);overflow:hidden;margin-bottom:13px;transition:background .35s;}
+.pb-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),rgba(130,80,255,.85));}
+.pct{font-size:30px;font-weight:700;letter-spacing:-1px;color:var(--blue);}
+.groups{display:flex;gap:5px;}
+.grp{flex:1;text-align:center;padding:7px 2px;border-radius:10px;font-size:10px;font-weight:600;transition:var(--trans);}
+.grp-n{font-size:15px;margin-bottom:2px;font-weight:700;}
+.gd{background:var(--gd-bg);border:1px solid var(--gd-br);color:var(--gd-t);}
+.gn{background:var(--gn-bg);border:1px solid var(--gn-br);color:var(--gn-t);}
+.gw{background:var(--gw-bg);border:1px solid var(--gw-br);color:var(--gw-t);}
+
+/* ── Lug row ── */
+.lug-row{display:flex;align-items:center;gap:12px;}
+.lug-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:rgba(40,212,126,.12);border:1px solid rgba(40,212,126,.24);display:flex;align-items:center;justify-content:center;}
+.chk{margin-left:auto;width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(40,212,126,.14);display:flex;align-items:center;justify-content:center;}
+
+/* ── Ann ── */
+.ann{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
+.ann:first-child{padding-top:2px;}
+.ann:last-child{border-bottom:none;padding-bottom:2px;}
+.adot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+
+/* ── Nitem ── */
+.nitem{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
+.nitem:last-child{border-bottom:none;padding-bottom:2px;}
+.nitem:first-child{padding-top:2px;}
+.nico{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.nb{background:rgba(77,166,255,.12);border:1px solid rgba(77,166,255,.22);}
+.ng{background:rgba(40,212,126,.10);border:1px solid rgba(40,212,126,.22);}
+.na{background:rgba(245,192,48,.10);border:1px solid rgba(245,192,48,.22);}
+.nr{background:rgba(255,95,95,.10);border:1px solid rgba(255,95,95,.22);}
+.ntit{font-size:13.5px;font-weight:600;color:var(--t1);margin-bottom:3px;transition:color .35s;}
+.nbdy{font-size:12px;color:var(--t2);line-height:1.4;transition:color .35s;}
+.nti{font-size:10.5px;color:var(--t3);margin-top:4px;transition:color .35s;}
+.nud{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;}
+
+/* ── Phases ── */
+.phase{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
+.phase:last-child{border-bottom:none;padding-bottom:2px;}
+.phase:first-child{padding-top:2px;}
+.pnum{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+.pnum-d{background:var(--gd-bg);color:var(--gd-t);border:1px solid var(--gd-br);}
+.pnum-a{background:var(--gn-bg);color:var(--gn-t);border:1px solid var(--gn-br);}
+.pnum-w{background:var(--gw-bg);color:var(--gw-t);border:1px solid var(--gw-br);}
+.phi{flex:1;}
+.phtit{font-size:13.5px;font-weight:600;color:var(--t1);transition:color .35s;}
+.phdsc{font-size:11.5px;color:var(--t2);margin-top:2px;transition:color .35s;}
+.pst{font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:7px;white-space:nowrap;}
+.pst-d{background:var(--gd-bg);color:var(--gd-t);}
+.pst-a{background:var(--gn-bg);color:var(--gn-t);}
+.pst-w{color:var(--gw-t);}
+
+/* ── Lug steps ── */
+.lstep{display:flex;gap:11px;padding:8px 0;align-items:flex-start;}
+.lstep-l{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:2px;}
+.ldot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+.ldc{background:var(--green);box-shadow:0 0 8px var(--green);}
+.ldp{background:var(--pb);}
+.lseg{width:1px;height:26px;margin:3px 0;}
+.lsf{background:rgba(40,212,126,.38);}
+.lse{background:var(--dv);}
+
+/* ── Strip ── */
+.strip{display:flex;gap:8px;margin-bottom:10px;}
+.sitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;background:var(--cd-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--cd-br);border-top-color:var(--cd-top);border-radius:14px;box-shadow:var(--cd-sh);transition:var(--trans);}
+.sv{font-size:13px;font-weight:700;color:var(--t1);transition:color .35s;}
+.ss2{font-size:9.5px;color:var(--t3);transition:color .35s;}
+
+/* ── Map ── */
+.map-ph{width:100%;height:90px;border-radius:12px;margin-bottom:13px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.map-bg{position:absolute;inset:0;background:var(--gw-bg);transition:background .35s;}
+.map-grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(var(--dv) 1px,transparent 1px),linear-gradient(90deg,var(--dv) 1px,transparent 1px);background-size:22px 22px;}
+.map-lbl{font-size:11px;font-weight:600;color:var(--blue);position:relative;z-index:1;margin-left:8px;}
+
+/* ── Food ── */
+.food{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
+.food:last-child{border-bottom:none;padding-bottom:2px;}
+.food:first-child{padding-top:2px;}
+.fico{width:38px;height:38px;border-radius:10px;background:var(--gw-bg);border:1px solid var(--cd-br);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:var(--trans);}
+.fdist{font-size:11px;color:var(--blue);font-weight:500;margin-left:auto;flex-shrink:0;}
+
+/* ── Toggle (settings) ── */
+.tog-on{width:38px;height:22px;border-radius:11px;background:var(--blue);position:relative;flex-shrink:0;}
+.tog-on .tk{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.tog-off{width:38px;height:22px;border-radius:11px;background:var(--gw-bg);border:1px solid var(--gw-br);position:relative;flex-shrink:0;}
+.tog-off .tk{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--tk-kn);box-shadow:0 1px 4px rgba(0,0,0,.2);}
+
+/* ── Nav ── */
+.nav{position:absolute;bottom:0;left:0;right:0;z-index:50;display:flex;align-items:flex-start;padding:8px 10px 28px;background:var(--nav-bg);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);gap:2px;transition:background .4s;}
+.ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:12px;cursor:pointer;border:none;background:none;transition:background .2s;-webkit-tap-highlight-color:transparent;position:relative;}
+.ntab:hover,.ntab.on{background:var(--non);}
+.ni{width:22px;height:22px;stroke:var(--ni);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s;}
+.ntab.on .ni{stroke:var(--blue);}
+.nl{font-size:9.5px;color:var(--nl);font-weight:500;letter-spacing:.3px;transition:color .2s;}
+.ntab.on .nl{color:var(--blue);}
+.nav-dot{position:absolute;top:6px;right:calc(50% - 15px);width:6px;height:6px;border-radius:50%;background:var(--red);}
+.hbar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:130px;height:5px;border-radius:3px;background:var(--hb);z-index:200;transition:background .35s;}
+.hint-txt{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-size:11.5px;color:var(--hint);z-index:1;letter-spacing:.4px;pointer-events:none;white-space:nowrap;transition:color .35s;}
+
+@media(max-width:500px){
+  .phone{width:100%;height:100vh;border-radius:0;border:none;box-shadow:none;}
+  body{align-items:flex-start;}
+  .hint-txt{display:none;}
+  .tgl{top:12px;right:12px;}
+}
+
+.map-ph{width:100%;height:112px;border-radius:12px;margin-bottom:13px;display:flex;align-items:flex-end;justify-content:flex-start;position:relative;overflow:hidden;padding:12px;}
+.map-bg{position:absolute;inset:0;transition:background .35s;background:
+linear-gradient(180deg, rgba(191,221,182,.96) 0 100%),
+linear-gradient(90deg, transparent 0 8%, rgba(247,244,233,.98) 8% 15%, transparent 15% 31%, rgba(247,244,233,.98) 31% 38%, transparent 38% 56%, rgba(247,244,233,.98) 56% 62%, transparent 62% 100%),
+linear-gradient(0deg, transparent 0 14%, rgba(247,244,233,.98) 14% 20%, transparent 20% 42%, rgba(247,244,233,.98) 42% 48%, transparent 48% 67%, rgba(247,244,233,.98) 67% 73%, transparent 73% 100%);}
+.map-grid{position:absolute;inset:0;opacity:.08;background-image:linear-gradient(rgba(0,0,0,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.18) 1px,transparent 1px);background-size:24px 24px;}
+.map-lbl{font-size:11px;font-weight:700;color:#203244;position:relative;z-index:2;margin-left:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(32,50,68,.08);box-shadow:0 3px 10px rgba(0,0,0,.08);}
+.map-path,.map-terminal,.map-gate-pin,.map-road-shield{position:absolute;z-index:1;}
+.map-path{left:30px;right:46px;top:53px;height:0;border-top:3px dotted #2f80ed;}
+.map-terminal{right:10px;top:24px;width:90px;height:62px;border-radius:10px;background:rgba(224,232,238,.98);border:1px solid rgba(120,132,142,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45);}
+.map-terminal:before,.map-terminal:after{content:'';position:absolute;left:12px;right:12px;height:8px;border-radius:999px;background:rgba(175,188,198,.8);}
+.map-terminal:before{top:17px;}
+.map-terminal:after{top:35px;}
+.map-gate-pin{right:48px;top:45px;width:16px;height:16px;border-radius:50%;background:rgba(47,128,237,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(47,128,237,.10);}
+.map-gate-pin:before{content:'';width:8px;height:8px;border-radius:50%;background:#2f80ed;}
+.map-road-shield{left:18px;top:42px;font-size:9px;font-weight:700;color:#23415c;background:#f4d35e;padding:3px 6px;border-radius:999px;border:1px solid rgba(0,0,0,.06);}
+
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Theme toggle -->
+<div class="tgl" onclick="toggleTheme()">
+  <svg class="ico-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;" stroke="var(--atm)">
+    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+  </svg>
+  <svg class="ico-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="var(--atl)">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <div class="tgl-trk"><div class="tgl-knob"></div></div>
+  <span class="tgl-lbl" id="tgl-lbl">Dark</span>
+</div>
+
+<div class="phone">
+  <div class="island"><div class="island-dot"></div></div>
+
+  <!-- Status bar -->
+  <div class="sbar">
+    <span id="clk">9:41</span>
+    <div class="sbar-r">
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none">
+        <rect x="0" y="7.5" width="3" height="5.5" rx="1" class="si"/>
+        <rect x="4.5" y="5" width="3" height="8" rx="1" class="si"/>
+        <rect x="9" y="2" width="3" height="11" rx="1" class="si"/>
+        <rect x="13.5" y="0" width="3" height="13" rx="1" class="sd"/>
+      </svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+        <circle cx="8" cy="10" r="1.3" class="si"/>
+        <path d="M5.1 7.3C6.1 6.3 7 5.9 8 5.9s1.9.4 2.9 1.4" class="ss" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M2.5 4.8C4.2 3 6 2.1 8 2.1s3.8.9 5.5 2.7" class="ssd" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <svg width="26" height="13" viewBox="0 0 26 13" fill="none">
+        <rect x=".6" y=".6" width="21" height="11.8" rx="3.2" class="ssd" stroke-width="1.2"/>
+        <rect x="2" y="2" width="17" height="9" rx="2" class="si"/>
+        <path d="M23.5 4.5v4" class="ssd" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="screen">
+
+    <!-- ══ HOME ══ -->
+    <div class="pane show" id="p-home">
+      <div class="header">
+        <div class="logo">Gate<em>Live</em></div>
+        <div class="badge badge-on"><span class="pulse"></span>Boarding</div>
+      </div>
+
+      <div class="card hero">
+        <div class="hero-top">
+          <div>
+<div class="ts" style="margin-top:4px;">Passenger view</div>
+          </div>
+          <div class="hero-meta">
+            <div class="hero-pill">
+              <div class="hero-k">Flight</div>
+              <div class="hero-v">AA 2847</div>
+            </div>
+            <div class="hero-pill">
+              <div class="hero-k">Gate</div>
+              <div class="hero-v">B22</div>
+            </div>
+          </div>
+        </div>
+        <div class="route">
+          <div style="text-align:center"><div class="iata">ORD</div><div class="cname">Chicago</div></div>
+          <div class="rmid"><div class="rl rl-l"></div><div class="pdot"></div><div class="rl rl-r"></div></div>
+          <div style="text-align:center"><div class="iata">JFK</div><div class="cname">New York</div></div>
+        </div>
+        <div class="cdlbl">Boarding time</div>
+        <div style="text-align:center;margin-bottom:10px;">
+          <div style="font-size:62px;font-weight:800;letter-spacing:-3px;line-height:1;color:var(--t1);">11:20</div>
+          <div class="ts" style="margin-top:6px;font-size:12px;">On time · Arrives 3:05 PM</div>
+        </div>
+        <div class="cdlbl" style="font-size:9px;margin-bottom:6px;">Countdown</div>
+        <div class="cdown" style="transform:scale(.72);transform-origin:center top;margin:4px 0 -10px;">
+          <div class="cu"><div class="cn" id="ch">01</div><div class="csub">hr</div></div>
+          <div class="csep">:</div>
+          <div class="cu"><div class="cn" id="cm">47</div><div class="csub">min</div></div>
+          <div class="csep">:</div>
+          <div class="cu"><div class="cn" id="csc">22</div><div class="csub">sec</div></div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card"><div class="tl">Seat</div><div class="tv">14A</div><div class="ts">Window · Economy</div></div>
+        <div class="card"><div class="tl">Departure</div><div class="tv" style="font-size:20px;">11:50</div><div class="ts">Boarding now</div></div>
+      </div>
+
+      <!-- Alert -->
+      <div class="alert-strip card-amber">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div><div class="amsg">Gate changed from B18 to B22</div><div class="atime">22 minutes ago</div></div>
+      </div>
+
+      <!-- Map -->
+      <div class="card" style="padding:12px 12px 0;">
+        <div class="map-ph">
+          <div class="map-bg"></div>
+          <div class="map-grid"></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1;flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="map-lbl">Gate B22 — 8 min walk</span>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Boarding</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="font-size:13px;" class="t2">Group 3 now boarding</div>
+          <div class="pct">61%</div>
+        </div>
+        <div class="pb-wrap"><div class="pb-fill" style="width:61%"></div></div>
+        <div class="groups">
+          <div class="grp gd"><div class="grp-n">1</div>Done</div>
+          <div class="grp gd"><div class="grp-n">2</div>Done</div>
+          <div class="grp gn"><div class="grp-n">3</div>Now</div>
+          <div class="grp gw"><div class="grp-n">4</div>Wait</div>
+          <div class="grp gw"><div class="grp-n">5</div>Wait</div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Luggage</div>
+      <div class="card">
+        <div class="lug-row">
+          <div class="lug-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg></div>
+          <div style="flex:1"><div style="font-size:13.5px;font-weight:500;" class="t1">Check-in bag · 23 kg</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Loaded onto aircraft</div></div>
+          <div class="chk"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Announcements</div>
+      <div class="card">
+        <div class="ann"><div class="adot" style="background:var(--blue)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">Group 3 is now invited to board at gate B22</div><div style="font-size:10.5px;margin-top:2px;" class="t3">3 min ago</div></div></div>
+        <div class="ann"><div class="adot" style="background:var(--t3)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">Final call — passengers connecting to Miami, gate D11</div><div style="font-size:10.5px;margin-top:2px;" class="t3">11 min ago</div></div></div>
+        <div class="ann"><div class="adot" style="background:var(--t3)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">United 884 to London now boarding at gate C34</div><div style="font-size:10.5px;margin-top:2px;" class="t3">30 min ago</div></div></div>
+      </div>
+    </div>
+
+    <!-- ══ ALERTS ══ -->
+    <div class="pane" id="p-alerts">
+      <div class="ptitle">Alerts</div>
+      <div class="sec-lbl">New</div>
+      <div class="card">
+        <div class="nitem" style="align-items:flex-start;">
+          <div class="nud" style="margin-top:14px;"></div>
+          <div class="nico nb" style="flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div style="flex:1"><div class="ntit">Group 3 now boarding</div><div class="nbdy">Proceed to gate B22. Have your boarding pass and ID ready.</div><div class="nti">Just now</div></div>
+        </div>
+        <div class="nitem" style="align-items:flex-start;">
+          <div class="nud" style="margin-top:14px;"></div>
+          <div class="nico na" style="flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div style="flex:1"><div class="ntit">Gate change</div><div class="nbdy">Your flight has moved from B18 to B22, Terminal 3.</div><div class="nti">22 minutes ago</div></div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Earlier today</div>
+      <div class="card">
+        <div class="nitem">
+          <div class="nico ng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg></div>
+          <div style="flex:1"><div class="ntit">Bag loaded</div><div class="nbdy">Your checked bag has been loaded onto AA 2847</div><div class="nti">45 minutes ago</div></div>
+        </div>
+        <div class="nitem">
+          <div class="nico nb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.5L13 9.5V4a2 2 0 00-4 0v5.5L0 16.5v2l9-2.5V20l-2 1.5V23l3.5-1 3.5 1v-1.5L12 20v-4l9 2.5v-2z"/></svg></div>
+          <div style="flex:1"><div class="ntit">Boarding in 15 min</div><div class="nbdy">AA 2847 to JFK — gate B22, Terminal 3</div><div class="nti">1 hour ago</div></div>
+        </div>
+        <div class="nitem">
+          <div class="nico nb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div style="flex:1"><div class="ntit">Flight on time</div><div class="nbdy">AA 2847 confirmed on schedule. Departs 11:20 AM from ORD.</div><div class="nti">2 hours ago</div></div>
+        </div>
+        <div class="nitem">
+          <div class="nico ng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div style="flex:1"><div class="ntit">Check-in confirmed</div><div class="nbdy">Seat 14A · Boarding pass issued · AA 2847</div><div class="nti">3 hours ago</div></div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Notification settings</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0 10px;border-bottom:1px solid var(--dv);">
+          <div><div class="ntit" style="font-size:13px;">Boarding calls</div><div class="nbdy" style="font-size:11px;">Alert when your group is called</div></div>
+          <div class="tog-on"><div class="tk"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--dv);">
+          <div><div class="ntit" style="font-size:13px;">Gate changes</div><div class="nbdy" style="font-size:11px;">Immediate push alerts</div></div>
+          <div class="tog-on"><div class="tk"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 5px;">
+          <div><div class="ntit" style="font-size:13px;">Delays</div><div class="nbdy" style="font-size:11px;">Flight status updates</div></div>
+          <div class="tog-off"><div class="tk"></div></div>
+        </div>
+      </div>
+
+      <!-- Language card -->
+      <div class="sec-lbl">Language</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0 10px;border-bottom:1px solid var(--dv);">
+          <div><div class="ntit" style="font-size:13px;">English (US)</div><div class="nbdy" style="font-size:11px;">Interface language</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 5px;">
+          <div><div class="ntit" style="font-size:13px;">Auto-translate PA</div><div class="nbdy" style="font-size:11px;">Translate terminal announcements</div></div>
+          <div class="tog-on"><div class="tk"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BOARDING ══ -->
+    <div class="pane" id="p-board">
+      <div class="ptitle">Boarding</div>
+
+      <div class="card card-blue" style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div>
+            <div class="tl">Your seat</div>
+            <div style="font-size:38px;font-weight:800;letter-spacing:-1.5px;line-height:1;" class="t1">14A</div>
+            <div style="font-size:11.5px;margin-top:4px;" class="t2">Window · Row 14 · Economy</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="tl">Flight</div>
+            <div style="font-size:19px;font-weight:700;letter-spacing:-.5px;" class="t1">AA 2847</div>
+            <div style="font-size:11.5px;margin-top:4px;" class="t2">ORD → JFK</div>
+          </div>
+        </div>
+        <!-- Barcode -->
+        <div style="border-top:1px solid var(--dv);padding-top:13px;display:flex;align-items:center;justify-content:center;gap:2px;">
+          <div id="bc"></div>
+          <div style="font-size:9px;letter-spacing:.3px;margin-left:9px;" class="t3">AA2847 · 14A · ORD-JFK</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div><div style="font-size:15.5px;font-weight:600;" class="t1">Aircraft boarding</div><div style="font-size:11.5px;margin-top:2px;" class="t2">151 of 247 passengers</div></div>
+          <div class="pct" style="font-size:34px;">61%</div>
+        </div>
+        <div class="pb-wrap" style="height:7px;"><div class="pb-fill" style="width:61%"></div></div>
+      </div>
+
+      <div class="sec-lbl">Boarding groups</div>
+      <div class="card">
+        <div class="phase"><div class="pnum pnum-d">1</div><div class="phi"><div class="phtit">First Class</div><div class="phdsc">Rows 1–6 · Pre-board</div></div><div class="pst pst-d">Complete</div></div>
+        <div class="phase"><div class="pnum pnum-d">2</div><div class="phi"><div class="phtit">Priority &amp; Business</div><div class="phdsc">Rows 7–14 · AAdvantage Gold+</div></div><div class="pst pst-d">Complete</div></div>
+        <div class="phase"><div class="pnum pnum-a">3</div><div class="phi"><div class="phtit">Group 3 <span style="font-size:10px;color:var(--blue);font-weight:500;">· Your group</span></div><div class="phdsc">Rows 15–21</div></div><div class="pst pst-a">Boarding</div></div>
+        <div class="phase"><div class="pnum pnum-w">4</div><div class="phi"><div class="phtit">Group 4</div><div class="phdsc">Rows 22–28</div></div><div class="pst pst-w">Waiting</div></div>
+        <div class="phase"><div class="pnum pnum-w">5</div><div class="phi"><div class="phtit">Group 5</div><div class="phdsc">Rows 29–36 · Basic economy</div></div><div class="pst pst-w">Waiting</div></div>
+      </div>
+
+      <div class="sec-lbl">Seat location</div>
+      <div class="card" style="padding:14px;">
+        <div style="display:flex;justify-content:center;margin-bottom:8px;">
+          <svg width="180" height="90" viewBox="0 0 180 90">
+            <rect x="18" y="18" width="144" height="54" rx="14" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-opacity=".35"/>
+            <ellipse cx="162" cy="45" rx="10" ry="20" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-opacity=".25"/>
+            <line x1="40" y1="18" x2="40" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <line x1="60" y1="18" x2="60" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <line x1="80" y1="18" x2="80" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <line x1="100" y1="18" x2="100" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <line x1="120" y1="18" x2="120" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <line x1="140" y1="18" x2="140" y2="72" stroke="var(--dv)" stroke-width=".7"/>
+            <polygon points="60,18 100,18 95,6 55,6" fill="none" stroke="var(--blue)" stroke-width="1" stroke-opacity=".25"/>
+            <polygon points="60,72 100,72 95,84 55,84" fill="none" stroke="var(--blue)" stroke-width="1" stroke-opacity=".25"/>
+            <rect x="76" y="22" width="9" height="9" rx="2" fill="var(--blue)" opacity=".9"/>
+            <text x="80.5" y="30" text-anchor="middle" font-size="5.5" fill="#fff" font-weight="700" font-family="DM Sans,sans-serif">14A</text>
+          </svg>
+        </div>
+        <div style="text-align:center;font-size:11px;" class="t2">Seat 14A · left window · front half</div>
+      </div>
+
+      <div class="sec-lbl">Near gate B22</div>
+      <div class="card">
+        <div class="food"><div class="fico">&#9749;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Starbucks</div><div style="font-size:11px;margin-top:2px;" class="t2">Coffee · Open now</div></div><div class="fdist">2 min</div></div>
+        <div class="food"><div class="fico">&#127829;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Wicker Park Grill</div><div style="font-size:11px;margin-top:2px;" class="t2">Food · Closes 1 PM</div></div><div class="fdist">3 min</div></div>
+        <div class="food"><div class="fico">&#128218;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Hudson News</div><div style="font-size:11px;margin-top:2px;" class="t2">Snacks · pharmacy</div></div><div class="fdist">1 min</div></div>
+      </div>
+    </div>
+
+    <!-- ══ LUGGAGE ══ -->
+    <div class="pane" id="p-lug">
+      <div class="ptitle">Luggage</div>
+
+      <div class="card card-green">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:46px;height:46px;border-radius:13px;background:rgba(40,212,126,.14);border:1px solid rgba(40,212,126,.28);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+          </div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;" class="t1">Check-in bag</div><div style="font-size:11.5px;margin-top:2px;" class="t2">23 kg · Tag #DL4829</div></div>
+          <div style="font-size:10.5px;font-weight:600;color:var(--green);background:rgba(40,212,126,.11);border:1px solid rgba(40,212,126,.24);padding:5px 10px;border-radius:8px;">Loaded</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:46px;height:46px;border-radius:13px;background:var(--gw-bg);border:1px solid var(--gw-br);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.01c0 1-1.55 3.08-2 4-.19.38-.61.71-1 1H5c-.39-.29-.81-.62-1-1C3.55 11.09 2 9 2 8.01V7a2 2 0 012-2h16a2 2 0 012 2v1.01z"/><path d="M8 5V3a2 2 0 014 0v2M12 17v4M8 21h8"/></svg>
+          </div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;" class="t1">Personal item</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Carry-on · Cabin</div></div>
+          <div style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(77,166,255,.10);border:1px solid rgba(77,166,255,.22);padding:5px 10px;border-radius:8px;">With you</div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">Live tracking</div>
+      <div class="card">
+        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Checked in at counter</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Accepted, tagged and weighed · 23 kg</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">2:14 PM</div></div></div>
+        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Security screening</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Cleared TSA — no issues detected</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">2:28 PM</div></div></div>
+        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">In transit to gate</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Moving through baggage handling system</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">3:05 PM</div></div></div>
+        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lse"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Loaded onto aircraft</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Confirmed secure in cargo hold — AA 2847</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">3:42 PM</div></div></div>
+        <div class="lstep"><div class="lstep-l"><div class="ldot ldp"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t2">Arrived at JFK</div><div style="font-size:11.5px;margin-top:2px;" class="t3">Carousel assignment pending</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">Est. 3:25 PM</div></div></div>
+      </div>
+
+      <div class="sec-lbl">Baggage claim info</div>
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--dv);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div style="font-size:12px;line-height:1.4;" class="t2">Average wait at JFK Terminal 4 is 18–24 minutes after landing.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding-top:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          <div style="font-size:12px;line-height:1.4;" class="t2">You will receive a notification when your carousel is assigned.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="nav">
+      <button class="ntab on" onclick="tab('home',this)">
+        <svg class="ni" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nl">Home</span>
+      </button>
+      <button class="ntab" onclick="tab('alerts',this)" style="position:relative;">
+        <svg class="ni" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="nav-dot"></div>
+        <span class="nl">Alerts</span>
+      </button>
+      <button class="ntab" onclick="tab('board',this)">
+        <svg class="ni" viewBox="0 0 24 24"><path d="M22 16.5L13 9.5V4a2 2 0 00-4 0v5.5L0 16.5v2l9-2.5V20l-2 1.5V23l3.5-1 3.5 1v-1.5L12 20v-4l9 2.5v-2z"/></svg>
+        <span class="nl">Boarding</span>
+      </button>
+      <button class="ntab" onclick="tab('lug',this)">
+        <svg class="ni" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+        <span class="nl">Luggage</span>
+      </button>
+    </div>
+  </div>
+  <div class="hbar"></div>
+</div>
+
+<div class="hint-txt">Gate Live · Passenger Experience Demo · Team 2</div>
+
+<script>
+function toggleTheme(){
+  const h=document.documentElement;
+  const n=h.dataset.theme==='dark'?'light':'dark';
+  h.dataset.theme=n;
+  document.getElementById('tgl-lbl').textContent=n==='dark'?'Dark':'Light';
+}
+function tab(name,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('on'));
+  const el=document.getElementById('p-'+name);
+  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+  btn.classList.add('on');
+}
+function tick(){
+  const n=new Date();
+  const h=n.getHours()%12||12;
+  const m=String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('clk').textContent=h+':'+m;
+}
+tick();setInterval(tick,1000);
+const target=Date.now()+(1*3600+47*60+22)*1000;
+function countdown(){
+  const d=Math.max(0,target-Date.now());
+  document.getElementById('ch').textContent=String(Math.floor(d/3600000)).padStart(2,'0');
+  document.getElementById('cm').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
+  document.getElementById('csc').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
+}
+countdown();setInterval(countdown,1000);
+(function(){
+  const c=document.getElementById('bc');if(!c)return;
+  const w=[1,2,1,3,1,2,2,1,2,1,3,1,1,2,1,2,3,1,2,1,1,2,3,1,1,2,1,2,1,2,3,1,2,1,1,3,1,2,1,2,1,3,1,1,2,1,2,1];
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  let total=0;w.forEach((v,i)=>total+=i%2===0?v*1.8+0.8:v*0.5);
+  svg.setAttribute('width',String(Math.round(total)));svg.setAttribute('height','24');svg.style.display='block';
+  let x=0;
+  w.forEach((v,i)=>{
+    if(i%2===0){
+      const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r.setAttribute('x',String(Math.round(x)));r.setAttribute('y','0');
+      r.setAttribute('width',String(v*1.8));r.setAttribute('height','22');
+      r.setAttribute('rx','0.4');r.setAttribute('fill','var(--t2)');
+      svg.appendChild(r);
+      x+=v*1.8+0.8;
+    } else {
+      x+=v*0.5;
+    }
+  });
+  c.appendChild(svg);
+})();
+</script>
+</body>
+</html>
